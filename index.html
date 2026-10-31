@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&D World 3.0</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">D&D <span>WORLD</span> 3.0</div>
+    <div class="account">
+      <label for="accountSelect">บัญชีผู้เล่น</label>
+      <select id="accountSelect">
+        <option>ปาม</option>
+        <option>เครป</option>
+        <option>ภูเขา</option>
+        <option>อลิส</option>
+      </select>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel server-panel">
+      <h2>เซิร์ฟเวอร์</h2>
+      <div class="server-actions">
+        <button id="createServer">+ สร้างเซิร์ฟเวอร์</button>
+        <button id="joinServer" class="secondary">เข้าร่วมด้วยรหัส</button>
+      </div>
+      <div id="serverList"></div>
+      <div id="serverInfo" class="server-info">ยังไม่ได้เลือกเซิร์ฟเวอร์</div>
+    </section>
+
+    <section id="gameArea" class="game-area hidden">
+      <div class="game-heading">
+        <div>
+          <h1 id="serverTitle">ชื่อเซิร์ฟเวอร์</h1>
+          <p id="serverRole">สถานะผู้เล่น</p>
+        </div>
+        <div id="serverCode" class="server-code"></div>
+      </div>
+
+      <div class="columns">
+        <section class="panel map-panel">
+          <div class="section-heading">
+            <h2>แผนที่โลก</h2>
+            <span id="mapStatus">8 × 8</span>
+          </div>
+
+          <div id="dmTools" class="tools hidden">
+            <button data-tool="wall">กำแพง</button>
+            <button data-tool="water">น้ำ</button>
+            <button data-tool="tree">ต้นไม้</button>
+            <button data-tool="monster">มอนสเตอร์</button>
+            <button data-tool="clear">ลบช่อง</button>
+            <button data-tool="move" class="secondary">เลือก/เดิน</button>
+          </div>
+
+          <div id="map" class="map"></div>
+          <p class="hint" id="mapHint">แตะช่องบนแผนที่เพื่อเดินตัวละคร</p>
+        </section>
+
+        <aside class="side-column">
+          <section class="panel">
+            <h2>ผู้เล่นในเซิร์ฟเวอร์</h2>
+            <div id="playerList"></div>
+          </section>
+
+          <section class="panel">
+            <h2>สถานะตัวละคร</h2>
+            <div id="characterStatus">ยังไม่มีตัวละคร</div>
+            <div class="hp-actions">
+              <button id="healButton" class="secondary">ฟื้นฟู HP +5</button>
+              <button id="damageButton" class="danger">รับความเสียหาย -5</button>
+            </div>
+          </section>
+
+          <section class="panel">
+            <h2>ลูกเต๋า</h2>
+            <div class="dice-row">
+              <input id="diceInput" value="1d20" placeholder="เช่น 2d6">
+              <button id="rollButton">ทอย</button>
+            </div>
+            <div id="diceResult" class="result">ผลการทอยจะแสดงที่นี่</div>
+          </section>
+        </aside>
+      </div>
+
+      <section id="dmPanel" class="panel dm-panel hidden">
+        <h2>ห้องควบคุม DM</h2>
+        <p class="hint">เฉพาะเจ้าของเซิร์ฟเวอร์เท่านั้นที่ใช้ส่วนนี้ได้</p>
+
+        <div class="dm-actions">
+          <button id="addMonster">+ เพิ่มมอนสเตอร์</button>
+          <button id="resetMap" class="danger">ล้างแผนที่</button>
+          <button id="saveWorld" class="secondary">บันทึกโลก</button>
+        </div>
+
+        <div id="monsterList"></div>
+      </section>
+
+      <section class="panel chat-panel">
+        <h2>แชตในเซิร์ฟเวอร์</h2>
+        <div id="chatMessages" class="chat-messages"></div>
+        <div class="chat-input">
+          <input id="chatInput" placeholder="พิมพ์ข้อความ...">
+          <button id="sendChat">ส่ง</button>
+        </div>
+      </section>
+    </section>
+
+    <section id="welcome" class="panel welcome">
+      <h1>ยินดีต้อนรับสู่ D&D World</h1>
+      <p>เลือกบัญชี แล้วสร้างเซิร์ฟเวอร์หรือเข้าร่วมเซิร์ฟเวอร์ที่มีรหัส</p>
+    </section>
+  </main>
+
+  <footer>
+    D&D WORLD 3.0 · LOCAL PROTOTYPE
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

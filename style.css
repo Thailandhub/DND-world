@@ -1,0 +1,297 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #090909;
+  color: #eeeeee;
+  font-family: Arial, sans-serif;
+}
+
+button, input, select {
+  font: inherit;
+  border-radius: 0;
+}
+
+.topbar {
+  min-height: 65px;
+  background: #111;
+  border-bottom: 2px solid #751818;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 22px;
+  gap: 15px;
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.brand span {
+  color: #bd3030;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+select, input {
+  background: #171717;
+  color: white;
+  border: 1px solid #444;
+  padding: 10px;
+  min-width: 0;
+}
+
+main {
+  max-width: 1250px;
+  margin: auto;
+  padding: 20px;
+}
+
+.panel {
+  background: #111;
+  border: 1px solid #333;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+h1, h2, p {
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 17px;
+  border-left: 3px solid #a32323;
+  padding-left: 10px;
+}
+
+button {
+  background: #8f2020;
+  color: white;
+  border: 1px solid #a83a3a;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #b12b2b;
+}
+
+button.secondary {
+  background: #252525;
+  border-color: #555;
+}
+
+button.danger {
+  background: #4b1717;
+  border-color: #762323;
+}
+
+.server-actions, .dm-actions, .hp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.server-item {
+  width: 100%;
+  display: block;
+  text-align: left;
+  background: #191919;
+  border: 1px solid #383838;
+  margin: 6px 0;
+}
+
+.server-item.active {
+  border-color: #b12b2b;
+  background: #271414;
+}
+
+.server-info, .hint {
+  color: #999;
+  font-size: 13px;
+}
+
+.game-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.game-heading h1 {
+  margin-bottom: 5px;
+}
+
+.game-heading p {
+  color: #aaa;
+  margin-bottom: 0;
+}
+
+.server-code {
+  background: #1c1c1c;
+  border: 1px solid #555;
+  padding: 10px;
+  color: #e6aaaa;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(250px, 1fr);
+  gap: 16px;
+}
+
+.side-column {
+  min-width: 0;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+}
+
+.section-heading span {
+  color: #999;
+  font-size: 13px;
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.tools button {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.map {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 3px;
+  background: #050505;
+}
+
+.map-cell {
+  aspect-ratio: 1;
+  background: #252525;
+  border: 1px solid #414141;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: clamp(12px, 2vw, 20px);
+}
+
+.map-cell.wall { background: #555; }
+.map-cell.water { background: #17364b; }
+.map-cell.tree { background: #18321e; }
+.map-cell.monster { background: #591d1d; }
+.map-cell.player { outline: 2px solid #d2a04b; }
+
+.player-row, .monster-row {
+  background: #1b1b1b;
+  border: 1px solid #333;
+  padding: 9px;
+  margin: 6px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hp-actions button {
+  flex: 1;
+}
+
+.dice-row, .chat-input {
+  display: flex;
+  gap: 6px;
+}
+
+.dice-row input, .chat-input input {
+  flex: 1;
+  width: 100%;
+}
+
+.result {
+  margin-top: 12px;
+  padding: 10px;
+  background: #1c1c1c;
+  color: #e9b2b2;
+}
+
+.dm-panel {
+  border: 1px solid #8f2020;
+  background: #151010;
+}
+
+.chat-messages {
+  height: 180px;
+  overflow-y: auto;
+  background: #080808;
+  border: 1px solid #333;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.chat-message {
+  margin-bottom: 9px;
+  overflow-wrap: anywhere;
+}
+
+.chat-message strong {
+  color: #d66b6b;
+}
+
+.welcome {
+  text-align: center;
+  padding: 45px 15px;
+  margin-top: 20px;
+}
+
+.welcome h1 {
+  color: #c34a4a;
+}
+
+.hidden {
+  display: none !important;
+}
+
+footer {
+  text-align: center;
+  color: #555;
+  padding: 20px;
+  font-size: 12px;
+}
+
+@media (max-width: 750px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .game-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  main {
+    padding: 10px;
+  }
+}
