@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D&D ออนไลน์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700&family=Sarabun:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
+</head>
+<body>
+
+<div id="start" class="wrap">
+  <h1>D&amp;D ออนไลน์</h1>
+  <p class="hint">DM เป็นคนจริง ผู้เล่นเข้าห้องด้วยรหัส ไม่ต้องสมัครบัญชี</p>
+  <section class="panel">
+    <h2>เป็น DM</h2>
+    <button id="goDM" class="primary">สร้างห้อง / เล่นต่อจากเดิม</button>
+  </section>
+  <section class="panel">
+    <h2>เป็นผู้เล่น</h2>
+    <label>รหัสห้อง<input id="code" placeholder="เช่น k3x9a" autocapitalize="off"></label>
+    <label>ชื่อตัวละคร<input id="joinName" placeholder="ชื่อเดิมจะเปิดตัวละครที่เซฟไว้"></label>
+    <button id="goPlayer" class="primary">เข้าร่วม</button>
+  </section>
+  <p id="startMsg" class="hint"></p>
+</div>
+
+<div id="app" class="wrap" hidden>
+  <header class="top"><b id="who"></b><span id="room"></span><span id="net" class="hint"></span></header>
+  <nav id="tabs">
+    <button data-tab="map" class="on">แผนที่</button>
+    <button data-tab="scenes" data-r="dm">ฉาก</button>
+    <button data-tab="char" data-r="pl">ตัวละคร</button>
+    <button data-tab="party" data-r="dm">ปาร์ตี้</button>
+    <button data-tab="dice">ลูกเต๋า/แชท</button>
+  </nav>
+
+  <section id="tab-map" class="tab panel">
+    <p id="sceneTitle" class="roll"></p>
+    <canvas id="map"></canvas>
+    <div id="tokInfo" class="hint"></div>
+    <div id="tokCtl" data-r="dm" class="row">
+      <input id="hpAmt" type="number" value="1" aria-label="จำนวน HP">
+      <button id="hpMinus">ลด HP</button><button id="hpPlus">เพิ่ม HP</button><button id="tokDel">ลบโทเคน</button>
+    </div>
+    <div data-r="dm">
+      <h2>เครื่องมือ DM</h2>
+      <label>ฉากที่กำลังดู/แก้ <select id="viewScene"></select></label>
+      <button id="sendParty">พาปาร์ตี้ไปฉากนี้</button>
+      <div class="row">
+        <button id="modeMove" class="on">ย้ายโทเคน</button>
+        <button id="modePaint">วาดแผนที่</button>
+      </div>
+      <div id="palette" class="row wrapRow"></div>
+      <h2>เพิ่มโทเคน (มอนสเตอร์ / NPC)</h2>
+      <div class="row">
+        <input id="tName" placeholder="ชื่อ"><input id="tHp" type="number" value="10" aria-label="HP"><input id="tColor" type="color" value="#7a1f33" aria-label="สี">
+      </div>
+      <button id="addTok">เพิ่มลงฉาก</button>
+    </div>
+  </section>
+
+  <section id="tab-scenes" class="tab panel" hidden>
+    <h2>สร้างฉากใหม่</h2>
+    <label>ชื่อฉาก<input id="sName" placeholder="เช่น ซอยหลังโรงเตี๊ยม"></label>
+    <div class="row">
+      <label>ประเภท<select id="sType"></select></label>
+      <label>กว้าง × สูง (ช่อง)<span class="row"><input id="sW" type="number" value="16"><input id="sH" type="number" value="12"></span></label>
+    </div>
+    <label>ย่านหลัก (เมือง/ภูมิภาค)<input id="sDistrict" list="districts" placeholder="เช่น สลัม, ย่านการค้า, ท่าเรือ"></label>
+    <datalist id="districts"><option value="ย่านการค้า"><option value="ย่านขุนนาง"><option value="สลัม"><option value="ท่าเรือ"><option value="ย่านวัด"><option value="ย่านช่างฝีมือ"></datalist>
+    <label>จุดย่อย<input id="sSub" placeholder="เช่น ตรอกมืด, ห้องใต้ดิน, ชั้น 2"></label>
+    <button id="addScene" class="primary">เพิ่มฉาก</button>
+    <h2>ฉากทั้งหมด</h2>
+    <ul id="sceneList" class="list"></ul>
+  </section>
+
+  <section id="tab-char" class="tab panel" hidden>
+    <label>ตัวละครที่เซฟไว้ <select id="lib"></select></label>
+    <button id="newChar">ตัวละครใหม่</button>
+    <div id="sheet">
+      <label>ชื่อ<input data-f="name"></label>
+      <div class="row"><label>เผ่า<input data-f="race"></label><label>อาชีพ<input data-f="cls"></label></div>
+      <div class="row">
+        <label>เลเวล<input data-f="lvl" type="number" min="1" max="20"></label>
+        <label>XP<input data-f="xp" type="number" min="0"></label>
+      </div>
+      <p id="lvlInfo" class="hint"></p>
+      <div class="row">
+        <label>HP<input data-f="hp" type="number"></label><label>HP สูงสุด<input data-f="max" type="number"></label>
+        <label>AC<input data-f="ac" type="number"></label><label>ความเร็ว<input data-f="speed" type="number"></label>
+      </div>
+      <h2>ค่าสถานะ (เริ่มที่ 10)</h2>
+      <div id="abil"></div>
+      <label>อาวุธ (เขียนอิสระ)<textarea data-f="weapons" rows="3" placeholder="เช่น ดาบยาว 1d8+3 ฟัน"></textarea></label>
+      <label>เวทมนตร์<textarea data-f="spells" rows="3"></textarea></label>
+      <label>สกิลและความสามารถ<textarea data-f="skills" rows="3"></textarea></label>
+      <label>ไอเท็ม<textarea data-f="items" rows="3"></textarea></label>
+      <label>ประวัติ / บันทึก<textarea data-f="notes" rows="4"></textarea></label>
+    </div>
+    <button id="saveChar" class="primary">เซฟตัวละคร (และส่งให้ DM)</button>
+  </section>
+
+  <section id="tab-party" class="tab panel" hidden>
+    <div class="row"><input id="xpAmt" type="number" value="100" aria-label="XP"><button id="giveXp">แจก XP ให้ทุกคน</button></div>
+    <div id="partyList"></div>
+  </section>
+
+  <section id="tab-dice" class="tab panel" hidden>
+    <label>ทอยเพื่ออะไร (ไม่บังคับ)<input id="why" placeholder="เช่น โจมตีด้วยดาบ"></label>
+    <label>สูตรลูกเต๋า<input id="notation" value="1d20" placeholder="1d20+3, 2d6+1d4-1, 1d37+1"></label>
+    <div class="row wrapRow" id="quick"></div>
+    <div class="row"><button id="rollBtn" class="primary">ทอยให้</button>
+      <input id="manual" type="number" placeholder="ผลจากลูกเต๋าจริง"><button id="manualBtn">ลงผลเอง</button></div>
+    <label data-r="dm" class="inline"><input id="secret" type="checkbox"> ทอยลับ (เห็นเฉพาะ DM)</label>
+    <p id="diceMsg" class="hint"></p>
+    <label><span id="sayLabel">พูด / เล่าเรื่อง</span><textarea id="say" rows="2"></textarea></label>
+    <button id="sayBtn">ส่ง</button>
+    <ul id="log" class="list"></ul>
+  </section>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
